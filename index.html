@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#253b35">
+  <meta name="description" content="A simple personal Kanban board">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>My Kanban</title>
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>My Kanban</h1>
+    <p class="muted">A simple place to organise your work</p>
+  </div>
+  <div class="top-actions">
+    <button id="installBtn" class="secondary" hidden>Install app</button>
+    <button id="exportBtn" class="secondary">Export backup</button>
+    <label class="button secondary file-label">Import file<input id="fileInput" type="file" accept=".txt,.md,.csv,.json"></label>
+  </div>
+</header>
+
+<main>
+  <section class="quick-add panel">
+    <h2>Add a task</h2>
+    <form id="taskForm">
+      <div class="form-grid">
+        <label class="wide">Task name
+          <input id="taskTitle" required maxlength="120" placeholder="e.g. Write concept note">
+        </label>
+        <label>Priority
+          <select id="taskPriority">
+            <option value="1">1 – Low</option>
+            <option value="2" selected>2 – Normal</option>
+            <option value="3">3 – High</option>
+            <option value="4">4 – Urgent</option>
+          </select>
+        </label>
+        <label>Due date
+          <input id="taskDue" type="date">
+        </label>
+        <label>Time period / plan
+          <input id="taskPeriod" placeholder="e.g. 6 sittings, 2 weeks">
+        </label>
+      </div>
+      <label>Description or instructions
+        <input id="taskDescription" placeholder="Optional short note">
+      </label>
+      <button type="submit">+ Add task</button>
+    </form>
+  </section>
+
+  <section class="import-panel panel">
+    <details>
+      <summary>Paste a complete plan or checklist</summary>
+      <p class="muted small">Put the main task on the first line. Use headings such as “Stage 1 — Planning” and checklist lines such as “[ ] Find sources”.</p>
+      <textarea id="pasteArea" rows="7" placeholder="Concept note writing&#10;Do one stage per sitting.&#10;&#10;Stage 1 — Before writing&#10;[ ] Write the topic in one sentence&#10;[ ] Collect 3 to 5 sources&#10;&#10;Stage 2 — The skeleton&#10;[ ] Define the problem"></textarea>
+      <div class="inline-actions">
+        <button id="previewBtn" type="button" class="secondary">Preview detected plan</button>
+        <button id="importTextBtn" type="button">Import plan</button>
+      </div>
+      <div id="preview" class="preview" hidden></div>
+    </details>
+  </section>
+
+  <section class="toolbar">
+    <input id="searchInput" type="search" placeholder="Search tasks…">
+    <select id="priorityFilter" aria-label="Filter by priority">
+      <option value="all">All priorities</option>
+      <option value="4">Priority 4 – Urgent</option>
+      <option value="3">Priority 3 – High</option>
+      <option value="2">Priority 2 – Normal</option>
+      <option value="1">Priority 1 – Low</option>
+    </select>
+    <span id="summary" class="muted"></span>
+  </section>
+
+  <section class="board" aria-label="Kanban board">
+    <div class="column" data-status="todo"><div class="column-head"><h2>To Do</h2><span id="count-todo" class="count">0</span></div><div class="cards" id="cards-todo"></div></div>
+    <div class="column" data-status="doing"><div class="column-head"><h2>In Progress</h2><span id="count-doing" class="count">0</span></div><div class="cards" id="cards-doing"></div></div>
+    <div class="column" data-status="done"><div class="column-head"><h2>Done</h2><span id="count-done" class="count">0</span></div><div class="cards" id="cards-done"></div></div>
+  </section>
+  <p class="footer-note">Your tasks are saved in this browser on this device. Export a backup regularly to move them to another device.</p>
+</main>
+
+<dialog id="editDialog">
+  <form method="dialog" id="editForm">
+    <h2>Edit task</h2>
+    <input type="hidden" id="editId">
+    <label>Task name<input id="editTitle" required></label>
+    <label>Description<input id="editDescription"></label>
+    <div class="form-grid">
+      <label>Priority<select id="editPriority"><option value="1">1 – Low</option><option value="2">2 – Normal</option><option value="3">3 – High</option><option value="4">4 – Urgent</option></select></label>
+      <label>Due date<input id="editDue" type="date"></label>
+      <label>Time period<input id="editPeriod"></label>
+      <label>Status<select id="editStatus"><option value="todo">To Do</option><option value="doing">In Progress</option><option value="done">Done</option></select></label>
+    </div>
+    <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button id="saveEdit" value="default">Save changes</button></div>
+  </form>
+</dialog>
+<script src="app.js"></script>
+</body>
+</html>
