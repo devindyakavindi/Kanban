@@ -1,16 +1,1 @@
-{
-  "name": "My Kanban Board",
-  "short_name": "My Kanban",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#f4f6f3",
-  "theme_color": "#253b35",
-  "icons": [
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-  ]
-}
+{"name":"Agile Kanban Board","short_name":"Kanban","start_url":".","display":"standalone","background_color":"#f5f5f2","theme_color":"#2d5be3","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
